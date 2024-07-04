@@ -55,4 +55,9 @@ export const SearchBarDropDown = styled.div`
   border: none;
   align-items: center;
   z-index: 10;
+  text-align: center;
+`;
+
+export const SearchBarSpinner = styled(FontAwesomeIcon)`
+  padding: 10px;
 `;

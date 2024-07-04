@@ -5,13 +5,11 @@ import {
   SearchBarDropDown,
   SearchBarInput,
   SearchBarSearch,
+  SearchBarSpinner,
 } from "./styles";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-// import useDebounce from "../../hooks/useDebounce";
+import { faSearch, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import AutoComplete from "../autocomplete/AutoComplete";
-// import useFetch from "../../hooks/useFetch";
 import { getFuzzyResults } from "../../services/FussySearch";
-// import Card from "../card/Card";
 
 interface SearchBarProps {
   setSearchTerm: (val: string) => void;
@@ -60,6 +58,7 @@ const SearchBar = ({
   };
 
   const closeSuggestions = () => setShowSuggestions(!showSuggestions);
+
   return (
     <>
       <SearchBarContainer>
@@ -72,27 +71,24 @@ const SearchBar = ({
             onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
           />
         </SearchBarBarContainer>
-        {status === "success" ? (
-          showSuggestions &&
-          searchTerm && (
-            <SearchBarDropDown>
-              {suggestedResults.length > 0 ? (
-                suggestedResults.map((results: any) => (
-                  <AutoComplete
-                    key={results.item.name + results.item.id}
-                    onPress={onSelect}
-                    value={results.item.name}
-                  />
-                ))
-              ) : (
-                <AutoComplete value="No Result/s found" />
-              )}
-            </SearchBarDropDown>
-          )
-        ) : status === "pending" ? (
-          <div>test</div>
-        ) : (
-          <div></div>
+        {showSuggestions && searchTerm && (
+          <SearchBarDropDown>
+            {status === "pending" ? (
+              <SearchBarSpinner icon={faSpinner} spin size="xl" />
+            ) : status === "error" ? (
+              <AutoComplete value="Error" />
+            ) : status === "success" && suggestedResults.length > 0 ? (
+              suggestedResults.map((results: any) => (
+                <AutoComplete
+                  key={results.item.name + results.item.id}
+                  onPress={onSelect}
+                  value={results.item.name}
+                />
+              ))
+            ) : (
+              <AutoComplete value="No Result/s found" />
+            )}
+          </SearchBarDropDown>
         )}
       </SearchBarContainer>
     </>
