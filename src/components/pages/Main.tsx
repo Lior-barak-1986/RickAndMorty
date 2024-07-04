@@ -4,6 +4,7 @@ import { MainContainer, MainHeader } from "./styles";
 import useDebounce from "../../hooks/useDebounce";
 import useFetch from "../../hooks/useFetch";
 import Cards from "../cards/Cards";
+import Login from "../login/Login";
 
 type Props = {};
 
@@ -13,6 +14,7 @@ const Main = (props: Props) => {
   const { data, status, isError, isLoading } = useFetch(debounceVal);
   return (
     <MainContainer>
+      <Login />
       <MainHeader>Search Rick and Morty API</MainHeader>
       <SearchBar
         searchTerm={searchTerm}
