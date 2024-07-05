@@ -10,17 +10,25 @@ export const LoginContainer = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const LoginInput = styled.input`
-  background-color: white;
-  width: 100%;
-  height: 2.5rem;
-  border: none;
-  display: flex;
-  align-items: center;
-  position: relative;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  outline: none;
 `;
+
+export const LoginButton = styled.button`
+  border: none;
+  padding: 10px;
+  margin: 10px;
+`;
+
+export const LoginCloseContainer = styled.div``;
 
 export const LoginUser = styled(FontAwesomeIcon)`
   margin: auto;

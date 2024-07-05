@@ -1,5 +1,11 @@
 import React, { ChangeEvent, useState } from "react";
-import { LoginContainer, LoginInput, LoginUser } from "./styles";
+import {
+  LoginButton,
+  LoginCloseContainer,
+  LoginContainer,
+  LoginInput,
+  LoginUser,
+} from "./styles";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 interface LoginProps {}
@@ -14,14 +20,14 @@ function Login({}: LoginProps) {
   };
   const onClick = () => setOpen((val) => !val);
   return (
-    <LoginContainer onClick={onClick}>
+    <LoginContainer>
       {open ? (
         <>
           <LoginInput
             value={userData.name}
             onChange={onChange}
             name="name"
-            placeholder="name"
+            placeholder="username"
           />
           <LoginInput
             value={userData.password}
@@ -30,11 +36,16 @@ function Login({}: LoginProps) {
             name="password"
             placeholder="******"
           />
+          <LoginButton>Login</LoginButton>
+          <LoginButton onClick={onClick}>Close</LoginButton>
         </>
-      ) : null}
-      <LoginUser icon={faUser} />
-      <br />
-      Login
+      ) : (
+        <LoginCloseContainer onClick={onClick}>
+          <LoginUser icon={faUser} />
+          <br />
+          Login
+        </LoginCloseContainer>
+      )}
     </LoginContainer>
   );
 }
