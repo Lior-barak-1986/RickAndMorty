@@ -5,16 +5,49 @@ import useDebounce from "../../hooks/useDebounce";
 import useFetch from "../../hooks/useFetch";
 import Cards from "../cards/Cards";
 import Login from "../login/Login";
+import { UserPartial } from "../../types/User";
+import { login } from "../../services/FetchData";
+import { addData, clearData } from "../../services/Storage";
 
 type Props = {};
 
 const Main = (props: Props) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [username, setUsername] = useState("");
   const { debounceVal } = useDebounce(searchTerm);
   const { data, status, isError, isLoading } = useFetch(debounceVal);
+
+  const onLogin = async (userData: UserPartial) => {
+    return new Promise((res, rej) => {
+      setTimeout(() => {
+        try {
+          login(userData);
+          addData("user", JSON.stringify(userData));
+          setUsername(userData.username);
+          res("");
+        } catch (e: any) {
+          rej(e);
+        }
+      }, 100);
+    });
+  };
+  const onLogout = async () => {
+    return new Promise((res, rej) => {
+      setTimeout(() => {
+        try {
+          clearData();
+          setUsername("");
+          res("");
+        } catch (e: any) {
+          rej(e);
+        }
+      }, 100);
+    });
+  };
+
   return (
     <MainContainer>
-      <Login />
+      <Login username={username} onLogin={onLogin} onLogout={onLogout} />
       <MainHeader>Search Rick and Morty API</MainHeader>
       <SearchBar
         searchTerm={searchTerm}

@@ -1,3 +1,5 @@
+import { users } from "../db/users";
+import { UserPartial } from "../types/User";
 import { baseURL, fetchData } from "../util";
 
 export const fetchAllLocations = async (params = "") => {
@@ -58,12 +60,20 @@ export const fetchAllEpisodes = async (params = "") => {
   return res;
 };
 
-export const fetchLocations = async (params = "") => {
+const fetchLocations = async (params = "") => {
   return await fetchData(baseURL + `/location/?${params}`);
 };
-export const fetchCharacters = async (params = "") => {
+const fetchCharacters = async (params = "") => {
   return await fetchData(baseURL + `/character/?${params}`);
 };
-export const fetchEpisodes = async (params = "") => {
+const fetchEpisodes = async (params = "") => {
   return await fetchData(baseURL + `/episode/?${params}`);
+};
+
+export const login = ({ username, password }: UserPartial) => {
+  const user = users.find((user) => user.username === username);
+  if (user && user.password === password) {
+    return { username: user.username, role: user.role };
+  }
+  throw new Error("Username and Password are incorrect");
 };

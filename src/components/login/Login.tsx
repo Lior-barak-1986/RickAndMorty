@@ -1,49 +1,124 @@
-import React, { ChangeEvent, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  MouseEvent,
+  MouseEventHandler,
+  useState,
+} from "react";
+
 import {
   LoginButton,
+  LoginButtonContainer,
   LoginCloseContainer,
   LoginContainer,
+  LoginDiv,
+  LoginError,
+  LoginFA,
+  LoginForm,
   LoginInput,
+  LoginInputContainer,
+  LoginModalContainer,
+  LoginSpan,
   LoginUser,
 } from "./styles";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faLock, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { UserPartial } from "../../types/User";
 
-interface LoginProps {}
+interface LoginProps {
+  username: string;
+  onLogin: (userData: UserPartial) => Promise<unknown>;
+  onLogout: () => Promise<unknown>;
+}
 
-function Login({}: LoginProps) {
-  const [userData, setUserData] = useState({ name: "", password: "" });
-  const [open, setOpen] = useState(false);
+function Login({ username, onLogin, onLogout }: LoginProps) {
+  const [userData, setUserData] = useState<UserPartial>({
+    username,
+    password: "",
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation();
     setUserData((val) => ({ ...val, [e.target.name]: e.target.value }));
   };
-  const onClick = () => setOpen((val) => !val);
+  const onClickLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+    try {
+      await onLogin(userData);
+      setUserData({
+        username,
+        password: "",
+      });
+      setIsOpen(false);
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onClick = () => {
+    setError("");
+    setIsOpen((val) => !val);
+  };
+
+  const onClickLogout = (e: MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    onLogout();
+    setUserData({
+      username: "",
+      password: "",
+    });
+  };
+
   return (
     <LoginContainer>
-      {open ? (
-        <>
-          <LoginInput
-            value={userData.name}
-            onChange={onChange}
-            name="name"
-            placeholder="username"
-          />
-          <LoginInput
-            value={userData.password}
-            type="password"
-            onChange={onChange}
-            name="password"
-            placeholder="******"
-          />
-          <LoginButton>Login</LoginButton>
-          <LoginButton onClick={onClick}>Close</LoginButton>
-        </>
-      ) : (
+      <LoginModalContainer isOpen={isOpen} onRequestClose={onClick}>
+        <LoginForm onSubmit={onClickLogin}>
+          <LoginInputContainer isError={error.length > 0}>
+            <LoginFA icon={faUser} />
+            <LoginInput
+              required
+              value={userData.username}
+              onChange={onChange}
+              name="username"
+              placeholder="Username"
+            />
+          </LoginInputContainer>
+          <LoginInputContainer isError={error.length > 0}>
+            <LoginFA icon={faLock} />
+            <LoginInput
+              required
+              value={userData.password}
+              type="password"
+              onChange={onChange}
+              name="password"
+              placeholder="******"
+            />
+          </LoginInputContainer>
+          <LoginButtonContainer>
+            <LoginButton type="submit">Login</LoginButton>
+            <LoginButton onClick={onClick}>Close</LoginButton>
+          </LoginButtonContainer>
+          {isLoading && <LoginFA icon={faSpinner} spin />}
+          <LoginError>{error}</LoginError>
+        </LoginForm>
+      </LoginModalContainer>
+      {!isOpen && (
         <LoginCloseContainer onClick={onClick}>
           <LoginUser icon={faUser} />
-          <br />
-          Login
+          <LoginDiv>
+            {username}
+            {username.length > 0 ? (
+              <LoginSpan onClick={onClickLogout}>(Logout)</LoginSpan>
+            ) : (
+              "Login"
+            )}
+          </LoginDiv>
         </LoginCloseContainer>
       )}
     </LoginContainer>
