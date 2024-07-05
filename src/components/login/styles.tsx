@@ -8,9 +8,8 @@ export const LoginContainer = styled.div`
   border-radius: 10px;
   padding: 0 15px;
   box-shadow: 0px 0px 8px #ddd;
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  margin-right: 10px;
+  align-self: flex-end;
 `;
 
 export const LoginModalContainer = styled(ReactModal)`
