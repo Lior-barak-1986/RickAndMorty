@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { CardsContainer, CardsPagination } from "./styles";
 import "./styles.css";
 import Card from "../card/Card";
@@ -26,25 +26,15 @@ const Cards = ({ data }: CardsProps) => {
   const pageCount = Math.ceil(data.length / itemsPerPage) || 1;
 
   // Invoke when user click to request another page.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handlePageClick = (event: any) => {
+  const handlePageClick = ({ selected }: { selected: number }) => {
     if (data) {
-      const newOffset = (event.selected * itemsPerPage) % data.length;
-      console.log(
-        `User requested page number ${event.selected}, which is offset ${newOffset}`
-      );
+      const newOffset = (selected * itemsPerPage) % data.length;
       setItemOffset(newOffset);
     }
   };
 
   return (
     <>
-      {/* <div
-        style={{
-          width: "100%",
-          overflow: "hidden",
-        }}
-      > */}
       {data.length > 0 && (
         <CardsPagination
           className="react-paginate"
@@ -57,7 +47,6 @@ const Cards = ({ data }: CardsProps) => {
           renderOnZeroPageCount={null}
         />
       )}
-      {/* </div> */}
       <CardsContainer>
         {currentItems.map((val) => (
           <Card key={val.name + val.id} data={val} />

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ReactPaginate from "react-paginate";
 
 export const MainContainer = styled.div`
   padding-top: 5vh;

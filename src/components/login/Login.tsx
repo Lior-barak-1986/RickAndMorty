@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  MouseEvent,
-  MouseEventHandler,
-  useState,
-} from "react";
+import React, { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
 
 import {
   LoginButton,

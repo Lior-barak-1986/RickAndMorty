@@ -9,9 +9,7 @@ import { UserPartial } from "../../types/User";
 import { login } from "../../services/FetchData";
 import { addData, clearData } from "../../services/Storage";
 
-type Props = {};
-
-const Main = (props: Props) => {
+const Main = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [username, setUsername] = useState("");
   const { debounceVal } = useDebounce(searchTerm);
