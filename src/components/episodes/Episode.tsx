@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { EpisodeType } from "../../types/Episodes";
-import { EpisodeContainer, EpisodeHeader, EpisodeLimit } from "./styles";
+import {
+  EpisodeContainer,
+  EpisodeHeader,
+  EpisodeLimit,
+  EpisodeLine,
+} from "./styles";
 
 interface EpisodeProps {
   data: EpisodeType;
@@ -16,10 +21,22 @@ function Episode({ data }: EpisodeProps) {
   return (
     <EpisodeContainer onClick={onClick} rotate={isFlipped}>
       <EpisodeHeader>{name}</EpisodeHeader>
-      <EpisodeLimit>Episode: {episode}</EpisodeLimit>
-      <EpisodeLimit>Air date: {air_date}</EpisodeLimit>
-      <EpisodeLimit>Characters: {characters}</EpisodeLimit>
-      <EpisodeLimit>Created at: {created}</EpisodeLimit>
+      <EpisodeLine>
+        Episode:
+        <EpisodeLimit>{episode}</EpisodeLimit>
+      </EpisodeLine>
+      <EpisodeLine>
+        Air date:
+        <EpisodeLimit shouldBlur>{air_date}</EpisodeLimit>
+      </EpisodeLine>
+      <EpisodeLine>
+        Characters:
+        <EpisodeLimit shouldBlur>{characters}</EpisodeLimit>
+      </EpisodeLine>
+      <EpisodeLine>
+        Created at:
+        <EpisodeLimit>{created}</EpisodeLimit>
+      </EpisodeLine>
     </EpisodeContainer>
   );
 }

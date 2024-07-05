@@ -20,8 +20,12 @@ export const EpisodeHeader = styled.h1`
   overflow: hidden;
 `;
 
-export const EpisodeLimit = styled.div`
+export const EpisodeLine = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+export const EpisodeLimit = styled.span<{ shouldBlur?: boolean }>`
+  filter: ${({ shouldBlur = false }) => (shouldBlur ? "blur(0.2rem)" : "none")};
 `;

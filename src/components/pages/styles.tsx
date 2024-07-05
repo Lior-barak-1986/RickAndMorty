@@ -10,6 +10,7 @@ export const MainContainer = styled.div`
 `;
 
 export const MainHeader = styled.h1`
+  text-align: center;
   color: white;
 `;
 

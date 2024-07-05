@@ -25,8 +25,12 @@ export const CharacterImage = styled.img`
   height: 250px;
 `;
 
-export const CharacterLimit = styled.div`
+export const CharacterLine = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+export const CharacterLimit = styled.span<{ shouldBlur?: boolean }>`
+  filter: ${({ shouldBlur = false }) => (shouldBlur ? "blur(0.2rem)" : "none")};
 `;

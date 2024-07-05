@@ -5,6 +5,7 @@ import {
   CharacterHeader,
   CharacterImage,
   CharacterLimit,
+  CharacterLine,
 } from "./styles";
 
 interface CharacterProps {
@@ -36,14 +37,40 @@ function Character({ data }: CharacterProps) {
       <CharacterHeader>{name}</CharacterHeader>
       {isFlipped ? (
         <>
-          <CharacterLimit>Appeared at: {episode}</CharacterLimit>
-          <CharacterLimit>Gender: {gender}</CharacterLimit>
-          <CharacterLimit>Located at: {location.name}</CharacterLimit>
-          <CharacterLimit>Origin: {origin.name}</CharacterLimit>
-          <CharacterLimit>Species: {species}</CharacterLimit>
-          <CharacterLimit>Status: {status}</CharacterLimit>
-          {type && <CharacterLimit>Type: {type}</CharacterLimit>}
-          <CharacterLimit>Created at: {created}</CharacterLimit>
+          <CharacterLine>
+            Appeared at:
+            <CharacterLimit shouldBlur={true}>{episode}</CharacterLimit>
+          </CharacterLine>
+          <CharacterLine>
+            Gender:
+            <CharacterLimit>{gender}</CharacterLimit>
+          </CharacterLine>
+          <CharacterLine>
+            Located at:
+            <CharacterLimit shouldBlur={true}>{location.name}</CharacterLimit>
+          </CharacterLine>
+          <CharacterLine>
+            Origin:
+            <CharacterLimit>{origin.name}</CharacterLimit>
+          </CharacterLine>
+          <CharacterLine>
+            Species:
+            <CharacterLimit>{species}</CharacterLimit>
+          </CharacterLine>
+          <CharacterLine>
+            Status:
+            <CharacterLimit>{status}</CharacterLimit>
+          </CharacterLine>
+          {type && (
+            <CharacterLine>
+              Type:
+              <CharacterLimit> {type}</CharacterLimit>
+            </CharacterLine>
+          )}
+          <CharacterLine>
+            Created at:
+            <CharacterLimit>{created}</CharacterLimit>
+          </CharacterLine>
         </>
       ) : (
         <CharacterImage src={image} alt={name} />

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { LocationType } from "../../types/Locations";
-import { LocationContainer, LocationHeader, LocationLimit } from "./styles";
+import {
+  LocationContainer,
+  LocationHeader,
+  LocationLimit,
+  LocationLine,
+} from "./styles";
 
 interface LocationProps {
   data: LocationType;
@@ -16,10 +21,22 @@ function Location({ data }: LocationProps) {
   return (
     <LocationContainer onClick={onClick} rotate={isFlipped}>
       <LocationHeader>{name}</LocationHeader>
-      <LocationLimit>Residents: {residents}</LocationLimit>
-      <LocationLimit>Dimension: {dimension}</LocationLimit>
-      <LocationLimit>Type: {type}</LocationLimit>
-      <LocationLimit>Created at: {created}</LocationLimit>
+      <LocationLine>
+        Residents:
+        <LocationLimit shouldBlur> {residents}</LocationLimit>
+      </LocationLine>
+      <LocationLine>
+        Dimension:
+        <LocationLimit shouldBlur>{dimension}</LocationLimit>
+      </LocationLine>
+      <LocationLine>
+        Type:
+        <LocationLimit>{type}</LocationLimit>
+      </LocationLine>
+      <LocationLine>
+        Created at:
+        <LocationLimit>{new Date(created).toISOString()}</LocationLimit>
+      </LocationLine>
     </LocationContainer>
   );
 }
