@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import useFetchByType from "../../hooks/useFetchByType";
 import { APIType } from "../../types/Api";
 import { UserRoles } from "../../types/User";
@@ -8,6 +9,7 @@ interface MoreInfoProps {
   userRole: UserRoles;
   type: APIType;
   setTitleData: (val: string) => void;
+  openLoginMenu: (e: MouseEvent<any>) => void;
   isLast?: boolean;
 }
 
@@ -16,12 +18,13 @@ const MoreInfo = ({
   userRole,
   type,
   setTitleData,
+  openLoginMenu,
   isLast = false,
 }: MoreInfoProps) => {
   const { data: episode } = useFetchByType(id, type);
   setTitleData(episode);
   return (
-    <CardsLimit shouldBlur={userRole !== "Rick"}>
+    <CardsLimit shouldBlur={userRole !== "Rick"} onClick={openLoginMenu}>
       {episode} {isLast ? "" : ","}
     </CardsLimit>
   );

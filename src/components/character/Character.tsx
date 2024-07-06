@@ -10,9 +10,10 @@ import { addData, dateToISO8601 } from "../../util";
 interface CharacterProps {
   data: CharacterType;
   userRole: UserRoles;
+  openLogin: (e: MouseEvent<any>) => void;
 }
 
-function Character({ data, userRole }: CharacterProps) {
+function Character({ data, userRole, openLogin }: CharacterProps) {
   const {
     name,
     created,
@@ -43,6 +44,7 @@ function Character({ data, userRole }: CharacterProps) {
           userRole={userRole}
           type={typeEpisode}
           setTitleData={addStringData}
+          openLoginMenu={openLogin}
           isLast={ind === episode.length - 1}
         />
       )),
@@ -55,6 +57,7 @@ function Character({ data, userRole }: CharacterProps) {
     e.stopPropagation();
     setSeeMore((val) => !val);
   };
+
   const createDate = new Date(created);
 
   return (
@@ -73,7 +76,7 @@ function Character({ data, userRole }: CharacterProps) {
           </CardsLine>
           <CardsLine>
             Located at:{" "}
-            <CardsLimit shouldBlur={userRole !== "Rick"}>
+            <CardsLimit shouldBlur={userRole !== "Rick"} onClick={openLogin}>
               {location.name}
             </CardsLimit>
           </CardsLine>

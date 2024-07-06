@@ -10,9 +10,10 @@ import { addData, dateToISO8601 } from "../../util";
 interface EpisodeProps {
   data: EpisodeType;
   userRole: UserRoles;
+  openLogin: (e: MouseEvent<any>) => void;
 }
 
-function Episode({ data, userRole }: EpisodeProps) {
+function Episode({ data, userRole, openLogin }: EpisodeProps) {
   const { name, created, episode, air_date, characters, id } = data;
   const [isFlipped, setIsFlipped] = useState(false);
   const [titleData, setTitleData] = useState("");
@@ -33,6 +34,7 @@ function Episode({ data, userRole }: EpisodeProps) {
           type={typeCharacter}
           setTitleData={addStringData}
           isLast={ind === characters.length - 1}
+          openLoginMenu={openLogin}
         />
       )),
 
@@ -57,7 +59,7 @@ function Episode({ data, userRole }: EpisodeProps) {
       </CardsLine>
       <CardsLine>
         Air date:{" "}
-        <CardsLimit shouldBlur={userRole !== "Rick"}>
+        <CardsLimit shouldBlur={userRole !== "Rick"} onClick={openLogin}>
           {" "}
           {dateToISO8601(airDate)}
         </CardsLimit>

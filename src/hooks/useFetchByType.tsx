@@ -35,7 +35,6 @@ const useFetchByType = (val: string, type: APIType) => {
 };
 
 const getFetch = (type: APIType, val: string) => {
-  console.log(type, val);
   switch (type) {
     case typeCharacter:
       return fetchCharacters(`${val}`);

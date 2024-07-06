@@ -13,6 +13,7 @@ const Main = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [username, setUsername] = useState("");
   const [role, setRole] = useState<UserRoles>("Visitor");
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
   const { debounceVal } = useDebounce(searchTerm);
   const { data, status, isError, isLoading } = useFetchAll(debounceVal);
 
@@ -45,9 +46,23 @@ const Main = () => {
     });
   };
 
+  const changeIsOpen = (val = !isOpenLogin) => {
+    setIsOpenLogin(val);
+  };
+
+  const openLogin = () => {
+    setIsOpenLogin(true);
+  };
+
   return (
     <MainContainer>
-      <Login username={username} onLogin={onLogin} onLogout={onLogout} />
+      <Login
+        username={username}
+        onLogin={onLogin}
+        onLogout={onLogout}
+        isOpen={isOpenLogin}
+        ChangeIsOpen={changeIsOpen}
+      />
       <MainHeader>Search Rick and Morty API</MainHeader>
       <SearchBar
         searchTerm={searchTerm}
@@ -57,7 +72,9 @@ const Main = () => {
         isError={isError}
         isLoading={isLoading}
       />
-      {status === "success" && data && <Cards userRole={role} data={data} />}
+      {status === "success" && data && (
+        <Cards userRole={role} data={data} openLogin={openLogin} />
+      )}
     </MainContainer>
   );
 };

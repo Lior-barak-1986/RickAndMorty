@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import { CardsContainer, CardsPagination } from "./styles";
 import "./styles.css";
 import Card from "../card/Card";
@@ -7,6 +7,7 @@ import { UserRoles } from "../../types/User";
 interface CardsProps {
   data: Array<any>;
   userRole: UserRoles;
+  openLogin: () => void;
 }
 
 const minHeight = 32;
@@ -15,7 +16,7 @@ const h1Size = 43 + 21 * 2;
 
 const searchBarSize = 40;
 
-const Cards = ({ data, userRole }: CardsProps) => {
+const Cards = ({ data, userRole, openLogin }: CardsProps) => {
   const { clientWidth, clientHeight } = document.documentElement;
   const itemsPerPage = Math.min(
     10,
@@ -35,6 +36,11 @@ const Cards = ({ data, userRole }: CardsProps) => {
     }
   };
 
+  const openLoginMenu = (e: MouseEvent<any>) => {
+    e.stopPropagation();
+    userRole !== "Rick" && openLogin();
+  };
+
   return (
     <>
       {data.length > 0 && (
@@ -51,7 +57,12 @@ const Cards = ({ data, userRole }: CardsProps) => {
       )}
       <CardsContainer>
         {currentItems.map((val) => (
-          <Card key={val.name + val.id} data={val} userRole={userRole} />
+          <Card
+            key={val.name + val.id}
+            data={val}
+            userRole={userRole}
+            openLogin={openLoginMenu}
+          />
         ))}
       </CardsContainer>
     </>

@@ -32,13 +32,11 @@ export const fetchAllEpisodes = async (params = "") => {
   const res = [];
   try {
     const response = await fetchEpisodes(`?${params}`);
-    console.log(response);
     res.push(response);
     for (let i = 2; i < response.info.pages + 1; i++) {
       res.push(await fetchEpisodes(`?page=${i}&${params}`));
     }
   } catch (e: any) {
-    console.log(e);
     throw new Error(e);
   }
   return res;

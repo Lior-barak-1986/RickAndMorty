@@ -10,9 +10,10 @@ import { typeCharacter } from "../../types/Api";
 interface LocationProps {
   data: LocationType;
   userRole: UserRoles;
+  openLogin: (e: MouseEvent<any>) => void;
 }
 
-function Location({ data, userRole }: LocationProps) {
+function Location({ data, userRole, openLogin }: LocationProps) {
   const { name, created, type, dimension, residents, id } = data;
   const [titleData, setTitleData] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
@@ -33,6 +34,7 @@ function Location({ data, userRole }: LocationProps) {
           type={typeCharacter}
           setTitleData={addStringData}
           isLast={ind === residents.length - 1}
+          openLoginMenu={openLogin}
         />
       )),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,7 +61,9 @@ function Location({ data, userRole }: LocationProps) {
       )}
       <CardsLine>
         Dimension:{" "}
-        <CardsLimit shouldBlur={userRole !== "Rick"}>{dimension}</CardsLimit>
+        <CardsLimit shouldBlur={userRole !== "Rick"} onClick={openLogin}>
+          {dimension}
+        </CardsLimit>
       </CardsLine>
       <CardsLine>
         Type: <CardsLimit>{type}</CardsLimit>
