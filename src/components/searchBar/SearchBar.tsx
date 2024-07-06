@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import {
   SearchBarBarContainer,
   SearchBarContainer,
@@ -25,8 +25,6 @@ const SearchBar = ({
   searchTerm,
   data,
   status,
-  isError,
-  isLoading,
 }: SearchBarProps) => {
   const [suggestedResults, setSuggestedResults] = useState<Array<any>>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -59,12 +57,20 @@ const SearchBar = ({
 
   const closeSuggestions = () => setShowSuggestions(!showSuggestions);
 
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.keyCode === 27) {
+      e.preventDefault();
+      setShowSuggestions(false);
+    }
+  };
+
   return (
     <>
       <SearchBarContainer>
         <SearchBarBarContainer>
           <SearchBarSearch icon={faSearch} onClick={closeSuggestions} />
           <SearchBarInput
+            onKeyDown={onKeyDown}
             onChange={onSearch}
             value={searchTerm}
             onFocus={closeSuggestions}
