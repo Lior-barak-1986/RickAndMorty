@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { CharacterType } from "../../types/Characters";
 import { CharacterContainer, CharacterHeader, CharacterImage } from "./styles";
 import { UserRoles } from "../../types/User";
 import { typeEpisode } from "../../types/Api";
 import { CardsLimit, CardsLine } from "../cards/styles";
 import MoreInfo from "../moreInfo/MoreInfo";
+import { addData, dateToISO8601 } from "../../util";
 
 interface CharacterProps {
   data: CharacterType;
@@ -23,27 +24,43 @@ function Character({ data, userRole }: CharacterProps) {
     species,
     status,
     type,
+    id,
   } = data;
   const [isFlipped, setIsFlipped] = useState(false);
+  const [titleData, setTitleData] = useState("");
   const onClick = () => {
     setIsFlipped((val) => !val);
   };
 
+  const addStringData = (val: string) => addData(val, setTitleData);
+
+  const MoreInfoComponents = useMemo(
+    () =>
+      episode.map((val, ind) => (
+        <MoreInfo
+          id={val.substring(val.lastIndexOf("/"))}
+          userRole={userRole}
+          type={typeEpisode}
+          setTitleData={addStringData}
+          isLast={ind === episode.length - 1}
+        />
+      )),
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [episode, userRole, id]
+  );
+
   const createDate = new Date(created);
+
   return (
     <CharacterContainer onClick={onClick} rotate={isFlipped}>
       <CharacterHeader>{name}</CharacterHeader>
       {isFlipped ? (
         <>
-          <CardsLine>
-            Appeared at:
-            {episode.map((val) => (
-              <MoreInfo
-                id={val.substring(val.lastIndexOf("/"))}
-                userRole={userRole}
-                type={typeEpisode}
-              />
-            ))}
+          <CardsLine
+            title={userRole === "Rick" ? titleData.slice(0, -1) : undefined}
+          >
+            Appeared at: {MoreInfoComponents}
           </CardsLine>
           <CardsLine>
             Gender: <CardsLimit>{gender}</CardsLimit>
@@ -69,14 +86,7 @@ function Character({ data, userRole }: CharacterProps) {
             </CardsLine>
           )}
           <CardsLine>
-            Created at:{" "}
-            <CardsLimit>
-              {createDate.getDate() +
-                "/" +
-                (createDate.getMonth() + 1) +
-                "/" +
-                createDate.getFullYear()}
-            </CardsLimit>
+            Created at: <CardsLimit>{dateToISO8601(createDate)}</CardsLimit>
           </CardsLine>
         </>
       ) : (

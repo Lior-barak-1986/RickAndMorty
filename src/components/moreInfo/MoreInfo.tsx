@@ -7,16 +7,22 @@ interface MoreInfoProps {
   id: string;
   userRole: UserRoles;
   type: APIType;
+  setTitleData: (val: string) => void;
+  isLast?: boolean;
 }
 
-const MoreInfo = ({ id, userRole, type }: MoreInfoProps) => {
+const MoreInfo = ({
+  id,
+  userRole,
+  type,
+  setTitleData,
+  isLast = false,
+}: MoreInfoProps) => {
   const { data: episode } = useFetchByType(id, type);
+  setTitleData(episode);
   return (
-    <CardsLimit
-      shouldBlur={userRole !== "Rick"}
-      title={userRole === "Rick" ? JSON.stringify(episode) : undefined}
-    >
-      {episode},
+    <CardsLimit shouldBlur={userRole !== "Rick"}>
+      {episode} {isLast ? "" : ","}
     </CardsLimit>
   );
 };

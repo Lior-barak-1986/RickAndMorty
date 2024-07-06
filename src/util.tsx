@@ -10,3 +10,18 @@ export const fetchData = async (val: string) => {
   }
   return result;
 };
+
+export const dateToISO8601 = (date: Date) => {
+  return (
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+  );
+};
+
+export const addData = (
+  val: string,
+  setData: (value: React.SetStateAction<string>) => void
+) => {
+  if (val) {
+    setData((curr) => (curr.indexOf(val) === -1 ? curr + val + " ," : curr));
+  }
+};
