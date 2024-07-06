@@ -1,7 +1,7 @@
 import React, { MouseEvent, useMemo, useState } from "react";
 import { LocationType } from "../../types/Locations";
 import { LocationContainer, LocationHeader } from "./styles";
-import { UserRoles } from "../../types/User";
+import { UserRoles, typeAdmin } from "../../types/User";
 import { CardsLimit, CardsLine } from "../cards/styles";
 import { addData, dateToISO8601 } from "../../util";
 import MoreInfo from "../moreInfo/MoreInfo";
@@ -54,7 +54,7 @@ function Location({ data, userRole, openLogin }: LocationProps) {
       <LocationHeader>{name}</LocationHeader>
       {residents.length > 0 && (
         <CardsLine
-          title={userRole === "Rick" ? titleData.slice(0, -2) : undefined}
+          title={userRole === typeAdmin ? titleData.slice(0, -2) : undefined}
           onClick={onClickSeeMore}
         >
           Residents: {seeMore ? MoreInfoComponents : "Click to see More"}
@@ -62,7 +62,7 @@ function Location({ data, userRole, openLogin }: LocationProps) {
       )}
       <CardsLine>
         Dimension:{" "}
-        <CardsLimit shouldBlur={userRole !== "Rick"} onClick={openLogin}>
+        <CardsLimit shouldBlur={userRole !== typeAdmin} onClick={openLogin}>
           {dimension}
         </CardsLimit>
       </CardsLine>

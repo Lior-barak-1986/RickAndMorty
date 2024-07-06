@@ -1,7 +1,7 @@
 import React, { useMemo, useState, MouseEvent } from "react";
 import { EpisodeType } from "../../types/Episodes";
 import { EpisodeContainer, EpisodeHeader } from "./styles";
-import { UserRoles } from "../../types/User";
+import { UserRoles, typeAdmin } from "../../types/User";
 import { CardsLimit, CardsLine } from "../cards/styles";
 import MoreInfo from "../moreInfo/MoreInfo";
 import { typeCharacter } from "../../types/Api";
@@ -60,13 +60,13 @@ function Episode({ data, userRole, openLogin }: EpisodeProps) {
       </CardsLine>
       <CardsLine>
         Air date:{" "}
-        <CardsLimit shouldBlur={userRole !== "Rick"} onClick={openLogin}>
+        <CardsLimit shouldBlur={userRole !== typeAdmin} onClick={openLogin}>
           {" "}
           {dateToISO8601(airDate)}
         </CardsLimit>
       </CardsLine>
       <CardsLine
-        title={userRole === "Rick" ? titleData.slice(0, -2) : undefined}
+        title={userRole === typeAdmin ? titleData.slice(0, -2) : undefined}
         onClick={onClickSeeMore}
       >
         Characters: {seeMore ? MoreInfoComponents : "Click to see More"}

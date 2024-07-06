@@ -1,7 +1,7 @@
 import React, { MouseEvent, useMemo, useState } from "react";
 import { CharacterType } from "../../types/Characters";
 import { CharacterContainer, CharacterHeader, CharacterImage } from "./styles";
-import { UserRoles } from "../../types/User";
+import { UserRoles, typeAdmin } from "../../types/User";
 import { typeEpisode } from "../../types/Api";
 import { CardsLimit, CardsLine } from "../cards/styles";
 import MoreInfo from "../moreInfo/MoreInfo";
@@ -67,7 +67,7 @@ function Character({ data, userRole, openLogin }: CharacterProps) {
       {isFlipped ? (
         <>
           <CardsLine
-            title={userRole === "Rick" ? titleData.slice(0, -2) : undefined}
+            title={userRole === typeAdmin ? titleData.slice(0, -2) : undefined}
             onClick={onClickSeeMore}
           >
             Appeared at: {seeMore ? MoreInfoComponents : "Click to see More"}
@@ -77,7 +77,7 @@ function Character({ data, userRole, openLogin }: CharacterProps) {
           </CardsLine>
           <CardsLine>
             Located at:{" "}
-            <CardsLimit shouldBlur={userRole !== "Rick"} onClick={openLogin}>
+            <CardsLimit shouldBlur={userRole !== typeAdmin} onClick={openLogin}>
               {location.name}
             </CardsLimit>
           </CardsLine>

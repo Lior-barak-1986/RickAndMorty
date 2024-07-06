@@ -19,22 +19,22 @@ const Card = ({ data, userRole, openLogin }: CardProps) => {
       {(data as CharacterType).image && (
         <Character
           data={data as CharacterType}
-          userRole={userRole}
           openLogin={openLogin}
+          userRole={userRole}
         />
       )}
       {(data as EpisodeType).air_date && (
         <Episode
           data={data as EpisodeType}
-          userRole={userRole}
           openLogin={openLogin}
+          userRole={userRole}
         />
       )}
       {(data as LocationType).dimension && (
         <Location
           data={data as LocationType}
-          userRole={userRole}
           openLogin={openLogin}
+          userRole={userRole}
         />
       )}
     </>

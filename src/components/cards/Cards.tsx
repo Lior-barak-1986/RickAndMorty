@@ -2,7 +2,7 @@ import React, { MouseEvent, useState } from "react";
 import { CardsContainer, CardsPagination } from "./styles";
 import "./styles.css";
 import Card from "../card/Card";
-import { UserRoles } from "../../types/User";
+import { UserRoles, typeAdmin } from "../../types/User";
 
 interface CardsProps {
   data: Array<any>;
@@ -38,15 +38,15 @@ const Cards = ({ data, userRole, openLogin }: CardsProps) => {
 
   const openLoginMenu = (e: MouseEvent<any>) => {
     e.stopPropagation();
-    userRole !== "Rick" && openLogin();
+    userRole !== typeAdmin && openLogin();
   };
 
   return (
     <>
       {data.length > 0 && (
         <CardsPagination
-          className="react-paginate"
           breakLabel="..."
+          className="react-paginate"
           nextLabel=">>"
           onPageChange={handlePageClick}
           pageRangeDisplayed={1}
@@ -60,8 +60,8 @@ const Cards = ({ data, userRole, openLogin }: CardsProps) => {
           <Card
             key={val.name + val.id}
             data={val}
-            userRole={userRole}
             openLogin={openLoginMenu}
+            userRole={userRole}
           />
         ))}
       </CardsContainer>

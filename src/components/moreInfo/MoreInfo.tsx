@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
 import useFetchByType from "../../hooks/useFetchByType";
 import { APIType } from "../../types/Api";
-import { UserRoles } from "../../types/User";
+import { UserRoles, typeAdmin } from "../../types/User";
 import { CardsLimit } from "../cards/styles";
 
 interface MoreInfoProps {
@@ -24,7 +24,7 @@ const MoreInfo = ({
   const { data: episode } = useFetchByType(id, type);
   setTitleData(episode);
   return (
-    <CardsLimit shouldBlur={userRole !== "Rick"} onClick={openLoginMenu}>
+    <CardsLimit shouldBlur={userRole !== typeAdmin} onClick={openLoginMenu}>
       {episode} {isLast ? "" : ","}
     </CardsLimit>
   );
