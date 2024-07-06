@@ -40,13 +40,13 @@ function Character({ data, userRole, openLogin }: CharacterProps) {
     () =>
       episode.map((val, ind) => (
         <MoreInfo
-          key={val.substring(val.lastIndexOf("/"))}
+          isLast={ind === episode.length - 1}
           id={val.substring(val.lastIndexOf("/"))}
+          key={val.substring(val.lastIndexOf("/"))}
           userRole={userRole}
           type={typeEpisode}
           setTitleData={addStringData}
           openLoginMenu={openLogin}
-          isLast={ind === episode.length - 1}
         />
       )),
 
@@ -67,8 +67,8 @@ function Character({ data, userRole, openLogin }: CharacterProps) {
       {isFlipped ? (
         <>
           <CardsLine
-            title={userRole === typeAdmin ? titleData.slice(0, -2) : undefined}
             onClick={onClickSeeMore}
+            title={userRole === typeAdmin ? titleData.slice(0, -2) : undefined}
           >
             Appeared at: {seeMore ? MoreInfoComponents : "Click to see More"}
           </CardsLine>
@@ -100,7 +100,7 @@ function Character({ data, userRole, openLogin }: CharacterProps) {
           </CardsLine>
         </>
       ) : (
-        <CharacterImage src={image} alt={name} />
+        <CharacterImage alt={name} src={image} />
       )}
     </CharacterContainer>
   );

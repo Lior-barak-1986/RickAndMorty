@@ -1,6 +1,6 @@
 import { UserType } from "../types/User";
 
-export const users: Array<UserType> = [
+export const users: UserType[] = [
   {
     username: "Rick",
     password: "8==D",

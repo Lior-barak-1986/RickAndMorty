@@ -1,8 +1,8 @@
 import Fuse, { IFuseOptions } from "fuse.js";
 
 export const getFuzzyResults = (
-  items: Array<any>,
-  options: IFuseOptions<any>,
+  items: Array<unknown>,
+  options: IFuseOptions<unknown>,
   searchTerm: string,
   limit = 10
 ) => {

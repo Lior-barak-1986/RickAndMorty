@@ -14,7 +14,7 @@ import { getFuzzyResults } from "../../services/FussySearch";
 interface SearchBarProps {
   setSearchTerm: (val: string) => void;
   searchTerm: string;
-  data: Array<any> | undefined;
+  data: any[] | undefined;
   status: "error" | "success" | "pending";
   isError: boolean;
   isLoading: boolean;
@@ -26,7 +26,7 @@ const SearchBar = ({
   data,
   status,
 }: SearchBarProps) => {
-  const [suggestedResults, setSuggestedResults] = useState<Array<any>>([]);
+  const [suggestedResults, setSuggestedResults] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {

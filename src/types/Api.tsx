@@ -13,7 +13,7 @@ export interface APIData {
     next: string | null;
     prev: string | null;
   };
-  results: Array<CharacterType | EpisodeType | LocationType>;
+  results: (CharacterType | EpisodeType | LocationType)[];
 }
 
 type APITypeCharacter = "Character";

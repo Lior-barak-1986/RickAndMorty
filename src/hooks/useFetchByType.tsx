@@ -37,11 +37,11 @@ const useFetchByType = (val: string, type: APIType) => {
 const getFetch = (type: APIType, val: string) => {
   switch (type) {
     case typeCharacter:
-      return fetchCharacters(`${val}`);
+      return fetchCharacters(val);
     case typeLocation:
-      return fetchLocations(`${val}`);
+      return fetchLocations(val);
     case typeEpisode:
-      return fetchEpisodes(`${val}`);
+      return fetchEpisodes(val);
     default:
       throw new Error("Type not found");
   }

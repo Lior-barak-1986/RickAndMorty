@@ -56,8 +56,8 @@ const Cards = ({ data, userRole, openLogin }: CardsProps) => {
       <CardsContainer>
         {currentItems.map((val) => (
           <Card
-            key={val.name + val.id}
             data={val}
+            key={val.name + val.id}
             openLogin={openLoginMenu}
             userRole={userRole}
           />

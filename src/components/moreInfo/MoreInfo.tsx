@@ -9,7 +9,7 @@ interface MoreInfoProps {
   userRole: UserRoles;
   type: APIType;
   setTitleData: (val: string) => void;
-  openLoginMenu: (e: MouseEvent<any>) => void;
+  openLoginMenu: (e: MouseEvent<unknown>) => void;
   isLast?: boolean;
 }
 
