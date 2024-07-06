@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { EpisodeType } from "../../types/Episodes";
-import {
-  EpisodeContainer,
-  EpisodeHeader,
-  EpisodeLimit,
-  EpisodeLine,
-} from "./styles";
+import { EpisodeContainer, EpisodeHeader } from "./styles";
+import { UserRoles } from "../../types/User";
+import { CardsLimit, CardsLine } from "../cards/styles";
 
 interface EpisodeProps {
   data: EpisodeType;
+  userRole: UserRoles;
 }
 
-function Episode({ data }: EpisodeProps) {
+function Episode({ data, userRole }: EpisodeProps) {
   const { name, created, episode, id, url, air_date, characters } = data;
   const [isFlipped, setIsFlipped] = useState(false);
   const onClick = () => {
@@ -21,22 +19,22 @@ function Episode({ data }: EpisodeProps) {
   return (
     <EpisodeContainer onClick={onClick} rotate={isFlipped}>
       <EpisodeHeader>{name}</EpisodeHeader>
-      <EpisodeLine>
+      <CardsLine>
         Episode:
-        <EpisodeLimit>{episode}</EpisodeLimit>
-      </EpisodeLine>
-      <EpisodeLine>
+        <CardsLimit>{episode}</CardsLimit>
+      </CardsLine>
+      <CardsLine>
         Air date:
-        <EpisodeLimit shouldBlur>{air_date}</EpisodeLimit>
-      </EpisodeLine>
-      <EpisodeLine>
+        <CardsLimit shouldBlur={userRole !== "Rick"}>{air_date}</CardsLimit>
+      </CardsLine>
+      <CardsLine>
         Characters:
-        <EpisodeLimit shouldBlur>{characters}</EpisodeLimit>
-      </EpisodeLine>
-      <EpisodeLine>
+        <CardsLimit shouldBlur={userRole !== "Rick"}>{characters}</CardsLimit>
+      </CardsLine>
+      <CardsLine>
         Created at:
-        <EpisodeLimit>{created}</EpisodeLimit>
-      </EpisodeLine>
+        <CardsLimit>{created}</CardsLimit>
+      </CardsLine>
     </EpisodeContainer>
   );
 }

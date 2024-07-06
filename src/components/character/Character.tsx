@@ -1,76 +1,83 @@
 import React, { useState } from "react";
 import { CharacterType } from "../../types/Characters";
-import {
-  CharacterContainer,
-  CharacterHeader,
-  CharacterImage,
-  CharacterLimit,
-  CharacterLine,
-} from "./styles";
+import { CharacterContainer, CharacterHeader, CharacterImage } from "./styles";
+import { UserRoles } from "../../types/User";
+import { typeEpisode } from "../../types/Api";
+import { CardsLimit, CardsLine } from "../cards/styles";
+import MoreInfo from "../moreInfo/MoreInfo";
 
 interface CharacterProps {
   data: CharacterType;
+  userRole: UserRoles;
 }
 
-function Character({ data }: CharacterProps) {
+function Character({ data, userRole }: CharacterProps) {
   const {
     name,
     created,
     episode,
     gender,
-    id,
     image,
     location,
     origin,
     species,
     status,
     type,
-    url,
   } = data;
   const [isFlipped, setIsFlipped] = useState(false);
   const onClick = () => {
     setIsFlipped((val) => !val);
   };
 
+  const createDate = new Date(created);
   return (
     <CharacterContainer onClick={onClick} rotate={isFlipped}>
       <CharacterHeader>{name}</CharacterHeader>
       {isFlipped ? (
         <>
-          <CharacterLine>
+          <CardsLine>
             Appeared at:
-            <CharacterLimit shouldBlur={true}>{episode}</CharacterLimit>
-          </CharacterLine>
-          <CharacterLine>
-            Gender:
-            <CharacterLimit>{gender}</CharacterLimit>
-          </CharacterLine>
-          <CharacterLine>
-            Located at:
-            <CharacterLimit shouldBlur={true}>{location.name}</CharacterLimit>
-          </CharacterLine>
-          <CharacterLine>
-            Origin:
-            <CharacterLimit>{origin.name}</CharacterLimit>
-          </CharacterLine>
-          <CharacterLine>
-            Species:
-            <CharacterLimit>{species}</CharacterLimit>
-          </CharacterLine>
-          <CharacterLine>
-            Status:
-            <CharacterLimit>{status}</CharacterLimit>
-          </CharacterLine>
+            {episode.map((val) => (
+              <MoreInfo
+                id={val.substring(val.lastIndexOf("/"))}
+                userRole={userRole}
+                type={typeEpisode}
+              />
+            ))}
+          </CardsLine>
+          <CardsLine>
+            Gender: <CardsLimit>{gender}</CardsLimit>
+          </CardsLine>
+          <CardsLine>
+            Located at:{" "}
+            <CardsLimit shouldBlur={userRole !== "Rick"}>
+              {location.name}
+            </CardsLimit>
+          </CardsLine>
+          <CardsLine>
+            Origin: <CardsLimit>{origin.name}</CardsLimit>
+          </CardsLine>
+          <CardsLine>
+            Species: <CardsLimit>{species}</CardsLimit>
+          </CardsLine>
+          <CardsLine>
+            Status: <CardsLimit>{status}</CardsLimit>
+          </CardsLine>
           {type && (
-            <CharacterLine>
-              Type:
-              <CharacterLimit> {type}</CharacterLimit>
-            </CharacterLine>
+            <CardsLine>
+              Type: <CardsLimit> {type}</CardsLimit>
+            </CardsLine>
           )}
-          <CharacterLine>
-            Created at:
-            <CharacterLimit>{created}</CharacterLimit>
-          </CharacterLine>
+          <CardsLine>
+            Created at:{" "}
+            <CardsLimit>
+              {createDate.getDate() +
+                "/" +
+                (createDate.getMonth() + 1) +
+                "/" +
+                createDate.getFullYear()}
+            </CardsLimit>
+          </CardsLine>
         </>
       ) : (
         <CharacterImage src={image} alt={name} />

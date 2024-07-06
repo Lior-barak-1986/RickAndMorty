@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { LocationType } from "../../types/Locations";
-import {
-  LocationContainer,
-  LocationHeader,
-  LocationLimit,
-  LocationLine,
-} from "./styles";
+import { LocationContainer, LocationHeader } from "./styles";
+import { UserRoles } from "../../types/User";
+import { CardsLimit, CardsLine } from "../cards/styles";
 
 interface LocationProps {
   data: LocationType;
+  userRole: UserRoles;
 }
 
-function Location({ data }: LocationProps) {
+function Location({ data, userRole }: LocationProps) {
   const { name, created, type, dimension, residents, url, id } = data;
   const [isFlipped, setIsFlipped] = useState(false);
   const onClick = () => {
@@ -21,22 +19,22 @@ function Location({ data }: LocationProps) {
   return (
     <LocationContainer onClick={onClick} rotate={isFlipped}>
       <LocationHeader>{name}</LocationHeader>
-      <LocationLine>
+      <CardsLine>
         Residents:
-        <LocationLimit shouldBlur> {residents}</LocationLimit>
-      </LocationLine>
-      <LocationLine>
+        <CardsLimit shouldBlur={userRole !== "Rick"}>{residents}</CardsLimit>
+      </CardsLine>
+      <CardsLine>
         Dimension:
-        <LocationLimit shouldBlur>{dimension}</LocationLimit>
-      </LocationLine>
-      <LocationLine>
+        <CardsLimit shouldBlur={userRole !== "Rick"}>{dimension}</CardsLimit>
+      </CardsLine>
+      <CardsLine>
         Type:
-        <LocationLimit>{type}</LocationLimit>
-      </LocationLine>
-      <LocationLine>
+        <CardsLimit>{type}</CardsLimit>
+      </CardsLine>
+      <CardsLine>
         Created at:
-        <LocationLimit>{new Date(created).toISOString()}</LocationLimit>
-      </LocationLine>
+        <CardsLimit>{new Date(created).toISOString()}</CardsLimit>
+      </CardsLine>
     </LocationContainer>
   );
 }

@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { CardsContainer, CardsPagination } from "./styles";
 import "./styles.css";
 import Card from "../card/Card";
+import { UserRoles } from "../../types/User";
 
 interface CardsProps {
   data: Array<any>;
+  userRole: UserRoles;
 }
 
 const minHeight = 32;
@@ -13,7 +15,7 @@ const h1Size = 43 + 21 * 2;
 
 const searchBarSize = 40;
 
-const Cards = ({ data }: CardsProps) => {
+const Cards = ({ data, userRole }: CardsProps) => {
   const { clientWidth, clientHeight } = document.documentElement;
   const itemsPerPage = Math.min(
     10,
@@ -49,7 +51,7 @@ const Cards = ({ data }: CardsProps) => {
       )}
       <CardsContainer>
         {currentItems.map((val) => (
-          <Card key={val.name + val.id} data={val} />
+          <Card key={val.name + val.id} data={val} userRole={userRole} />
         ))}
       </CardsContainer>
     </>

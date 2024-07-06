@@ -19,13 +19,3 @@ export const LocationHeader = styled.h1`
   white-space: nowrap;
   overflow: hidden;
 `;
-
-export const LocationLine = styled.div`
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-`;
-
-export const LocationLimit = styled.span<{ shouldBlur?: boolean }>`
-  filter: ${({ shouldBlur = false }) => (shouldBlur ? "blur(0.2rem)" : "none")};
-`;

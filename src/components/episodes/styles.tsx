@@ -19,13 +19,3 @@ export const EpisodeHeader = styled.h1`
   white-space: nowrap;
   overflow: hidden;
 `;
-
-export const EpisodeLine = styled.div`
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-`;
-
-export const EpisodeLimit = styled.span<{ shouldBlur?: boolean }>`
-  filter: ${({ shouldBlur = false }) => (shouldBlur ? "blur(0.2rem)" : "none")};
-`;

@@ -2,27 +2,29 @@ import React, { useState } from "react";
 import SearchBar from "../searchBar/SearchBar";
 import { MainContainer, MainHeader } from "./styles";
 import useDebounce from "../../hooks/useDebounce";
-import useFetch from "../../hooks/useFetch";
+import useFetchAll from "../../hooks/useFetchAll";
 import Cards from "../cards/Cards";
 import Login from "../login/Login";
-import { UserPartial } from "../../types/User";
+import { UserPartial, UserRoles } from "../../types/User";
 import { login } from "../../services/FetchData";
 import { addData, clearData } from "../../services/Storage";
 
 const Main = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [username, setUsername] = useState("");
+  const [role, setRole] = useState<UserRoles>("Visitor");
   const { debounceVal } = useDebounce(searchTerm);
-  const { data, status, isError, isLoading } = useFetch(debounceVal);
+  const { data, status, isError, isLoading } = useFetchAll(debounceVal);
 
   const onLogin = async (userData: UserPartial) => {
     return new Promise((res, rej) => {
       setTimeout(() => {
         try {
-          login(userData);
-          addData("user", JSON.stringify(userData));
+          const user = login(userData);
+          setRole(user.role);
+          addData("user", JSON.stringify(user));
           setUsername(userData.username);
-          res("");
+          res(user);
         } catch (e: any) {
           rej(e);
         }
@@ -55,7 +57,7 @@ const Main = () => {
         isError={isError}
         isLoading={isLoading}
       />
-      {status === "success" && data && <Cards data={data} />}
+      {status === "success" && data && <Cards userRole={role} data={data} />}
     </MainContainer>
   );
 };

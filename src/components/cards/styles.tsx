@@ -18,3 +18,13 @@ export const CardsContainer = styled.div`
 `;
 
 export const CardsPagination = styled(ReactPaginate)``;
+
+export const CardsLine = styled.div`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+export const CardsLimit = styled.span<{ shouldBlur?: boolean }>`
+  filter: ${({ shouldBlur = false }) => (shouldBlur ? "blur(0.2rem)" : "none")};
+`;
