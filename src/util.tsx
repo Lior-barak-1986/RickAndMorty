@@ -22,6 +22,6 @@ export const addData = (
   setData: (value: React.SetStateAction<string>) => void
 ) => {
   if (val) {
-    setData((curr) => (curr.indexOf(val) === -1 ? curr + val + " ," : curr));
+    setData((curr) => (curr.includes(val) ? curr + val + " ," : curr));
   }
 };

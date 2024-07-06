@@ -5,7 +5,7 @@ import Card from "../card/Card";
 import { UserRoles, typeAdmin } from "../../types/User";
 
 interface CardsProps {
-  data: Array<any>;
+  data: any[];
   userRole: UserRoles;
   openLogin: () => void;
 }
@@ -25,18 +25,16 @@ const Cards = ({ data, userRole, openLogin }: CardsProps) => {
   );
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
-  const currentItems = data.slice(itemOffset, endOffset) || [];
+  const currentItems = data.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(data.length / itemsPerPage) || 1;
 
   // Invoke when user click to request another page.
   const handlePageClick = ({ selected }: { selected: number }) => {
-    if (data) {
-      const newOffset = (selected * itemsPerPage) % data.length;
-      setItemOffset(newOffset);
-    }
+    const newOffset = (selected * itemsPerPage) % data.length;
+    setItemOffset(newOffset);
   };
 
-  const openLoginMenu = (e: MouseEvent<any>) => {
+  const openLoginMenu = (e: MouseEvent<unknown>) => {
     e.stopPropagation();
     userRole !== typeAdmin && openLogin();
   };

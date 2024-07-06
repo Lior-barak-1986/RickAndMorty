@@ -1,4 +1,4 @@
-export type EpisodeType = {
+export interface EpisodeType {
   id: number;
   name: string;
   air_date: string;
@@ -6,4 +6,4 @@ export type EpisodeType = {
   characters: string[];
   url: string;
   created: string;
-};
+}

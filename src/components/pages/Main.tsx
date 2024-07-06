@@ -27,7 +27,7 @@ const Main = () => {
           setUsername(userData.username);
           res(user);
         } catch (e: any) {
-          rej(e);
+          rej(new Error(e));
         }
       }, 100);
     });
@@ -40,7 +40,7 @@ const Main = () => {
           setUsername("");
           res("");
         } catch (e: any) {
-          rej(e);
+          rej(new Error(e));
         }
       }, 100);
     });

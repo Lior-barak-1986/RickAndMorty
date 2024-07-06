@@ -10,7 +10,7 @@ import { addData, dateToISO8601 } from "../../util";
 interface CharacterProps {
   data: CharacterType;
   userRole: UserRoles;
-  openLogin: (e: MouseEvent<any>) => void;
+  openLogin: (e: MouseEvent<unknown>) => void;
 }
 
 function Character({ data, userRole, openLogin }: CharacterProps) {

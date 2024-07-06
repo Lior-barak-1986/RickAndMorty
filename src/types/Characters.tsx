@@ -1,4 +1,4 @@
-export type CharacterType = {
+export interface CharacterType {
   created: string;
   episode: string[];
   gender: string;
@@ -17,4 +17,4 @@ export type CharacterType = {
   status: string;
   type: string;
   url: string;
-};
+}

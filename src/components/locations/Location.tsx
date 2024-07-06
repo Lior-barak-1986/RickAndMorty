@@ -10,7 +10,7 @@ import { typeCharacter } from "../../types/Api";
 interface LocationProps {
   data: LocationType;
   userRole: UserRoles;
-  openLogin: (e: MouseEvent<any>) => void;
+  openLogin: (e: MouseEvent<unknown>) => void;
 }
 
 function Location({ data, userRole, openLogin }: LocationProps) {

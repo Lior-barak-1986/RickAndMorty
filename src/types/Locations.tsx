@@ -1,4 +1,4 @@
-export type LocationType = {
+export interface LocationType {
   id: number;
   name: string;
   type: string;
@@ -6,4 +6,4 @@ export type LocationType = {
   residents: string[];
   url: string;
   created: string;
-};
+}

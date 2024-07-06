@@ -10,7 +10,7 @@ import { UserRoles } from "../../types/User";
 interface CardProps {
   data: EpisodeType | CharacterType | LocationType;
   userRole: UserRoles;
-  openLogin: (e: MouseEvent<any>) => void;
+  openLogin: (e: MouseEvent<unknown>) => void;
 }
 
 const Card = ({ data, userRole, openLogin }: CardProps) => {

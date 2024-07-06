@@ -10,7 +10,7 @@ import { addData, dateToISO8601 } from "../../util";
 interface EpisodeProps {
   data: EpisodeType;
   userRole: UserRoles;
-  openLogin: (e: MouseEvent<any>) => void;
+  openLogin: (e: MouseEvent<unknown>) => void;
 }
 
 function Episode({ data, userRole, openLogin }: EpisodeProps) {

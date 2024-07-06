@@ -2,11 +2,11 @@ import { CharacterType } from "./Characters";
 import { EpisodeType } from "./Episodes";
 import { LocationType } from "./Locations";
 
-export type APIError = {
+export interface APIError {
   error: string;
-};
+}
 
-export type APIData = {
+export interface APIData {
   info: {
     count: number;
     pages: number;
@@ -14,7 +14,7 @@ export type APIData = {
     prev: string | null;
   };
   results: Array<CharacterType | EpisodeType | LocationType>;
-};
+}
 
 type APITypeCharacter = "Character";
 
