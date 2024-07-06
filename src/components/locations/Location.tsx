@@ -29,6 +29,7 @@ function Location({ data, userRole, openLogin }: LocationProps) {
     () =>
       residents.map((val, ind) => (
         <MoreInfo
+          key={val.substring(val.lastIndexOf("/"))}
           id={val.substring(val.lastIndexOf("/"))}
           userRole={userRole}
           type={typeCharacter}

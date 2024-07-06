@@ -40,6 +40,7 @@ function Character({ data, userRole, openLogin }: CharacterProps) {
     () =>
       episode.map((val, ind) => (
         <MoreInfo
+          key={val.substring(val.lastIndexOf("/"))}
           id={val.substring(val.lastIndexOf("/"))}
           userRole={userRole}
           type={typeEpisode}
