@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const CardContainer = styled.div`
-  background-color: #fffff0;
   height: 2.5rem;
   border-radius: 10px;
   padding: 15px;

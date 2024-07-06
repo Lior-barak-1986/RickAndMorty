@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
 export const LocationContainer = styled.div<{ rotate: boolean }>`
-  background-color: #fffff0;
   border-radius: 10px;
   padding: 15px;
   box-shadow: 0px 0px 8px #ddd;
   background-color: white;
-  align-text: center;
   width: 300px;
   height: 200px;
   margin: auto;
