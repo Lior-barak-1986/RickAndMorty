@@ -5,7 +5,7 @@ import {
   fetchAllLocations,
 } from "../services/FetchData";
 
-const useFetch = (val: string) => {
+const useFetchAll = (val: string) => {
   const { data, status, isError, isLoading } = useQuery({
     queryKey: ["fetch", val],
     queryFn: async () => {
@@ -16,14 +16,12 @@ const useFetch = (val: string) => {
           fetchAllLocations(`name=${val}`),
           fetchAllEpisodes(`name=${val}`),
         ]);
-        // console.log(responses);
         return responses.reduce(
+          // @ts-ignore
           (curr, acc) => curr.concat(...acc.map((val) => val.results)),
           []
         );
       } catch (e: any) {
-        // console.log("here");
-        // console.log(e);
         throw new Error(e);
       }
     },
@@ -37,4 +35,4 @@ const useFetch = (val: string) => {
   };
 };
 
-export default useFetch;
+export default useFetchAll;
