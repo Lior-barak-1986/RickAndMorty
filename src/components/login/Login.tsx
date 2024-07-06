@@ -23,7 +23,8 @@ interface LoginProps {
   onLogin: (userData: UserPartial) => Promise<unknown>;
   onLogout: () => Promise<unknown>;
   isOpen: boolean;
-  ChangeIsOpen: (val: boolean) => void;
+  openLogin: () => void;
+  closeLogin: () => void;
 }
 
 function Login({
@@ -31,7 +32,8 @@ function Login({
   onLogin,
   onLogout,
   isOpen,
-  ChangeIsOpen,
+  openLogin,
+  closeLogin,
 }: LoginProps) {
   const [userData, setUserData] = useState<UserPartial>({
     username,
@@ -53,7 +55,7 @@ function Login({
         username,
         password: "",
       });
-      ChangeIsOpen(false);
+      closeLogin();
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -63,7 +65,7 @@ function Login({
 
   const onClick = () => {
     setError("");
-    ChangeIsOpen(!isOpen);
+    closeLogin();
   };
 
   const onClickLogout = (e: MouseEvent<HTMLSpanElement>) => {
@@ -109,7 +111,7 @@ function Login({
         </LoginForm>
       </LoginModalContainer>
       {!isOpen && (
-        <LoginCloseContainer onClick={onClick}>
+        <LoginCloseContainer onClick={openLogin}>
           <LoginUser icon={faUser} />
           <LoginDiv>
             {username}

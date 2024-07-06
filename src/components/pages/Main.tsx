@@ -38,6 +38,7 @@ const Main = () => {
         try {
           clearData();
           setUsername("");
+          setRole("Visitor");
           res("");
         } catch (e: any) {
           rej(new Error(e));
@@ -46,12 +47,20 @@ const Main = () => {
     });
   };
 
-  const changeIsOpen = (val = !isOpenLogin) => {
-    setIsOpenLogin(val);
-  };
+  // const changeIsOpen = (val = !isOpenLogin) => {
+  //   setIsOpenLogin(val);
+  // };
 
   const openLogin = () => {
-    setIsOpenLogin(true);
+    if (role === "Visitor") {
+      setIsOpenLogin(true);
+    } else {
+      alert("Log in as Admin Morty!");
+    }
+  };
+
+  const openCloseLogin = () => {
+    setIsOpenLogin(false);
   };
 
   return (
@@ -61,9 +70,10 @@ const Main = () => {
         onLogin={onLogin}
         onLogout={onLogout}
         isOpen={isOpenLogin}
-        ChangeIsOpen={changeIsOpen}
+        openLogin={openLogin}
+        closeLogin={openCloseLogin}
       />
-      <MainHeader>Search Rick and Morty API</MainHeader>
+      <MainHeader>Rick and Morty API</MainHeader>
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
