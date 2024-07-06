@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { MouseEvent, useMemo, useState } from "react";
 import { LocationType } from "../../types/Locations";
 import { LocationContainer, LocationHeader } from "./styles";
 import { UserRoles } from "../../types/User";
@@ -16,6 +16,8 @@ function Location({ data, userRole }: LocationProps) {
   const { name, created, type, dimension, residents, id } = data;
   const [titleData, setTitleData] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
+  const [seeMore, setSeeMore] = useState(false);
+
   const onClick = () => {
     setIsFlipped((val) => !val);
   };
@@ -37,13 +39,23 @@ function Location({ data, userRole }: LocationProps) {
     [residents, userRole, id]
   );
 
+  const onClickSeeMore = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setSeeMore((val) => !val);
+  };
+
   const createDate = new Date(created);
 
   return (
     <LocationContainer onClick={onClick} rotate={isFlipped}>
       <LocationHeader>{name}</LocationHeader>
       {residents.length > 0 && (
-        <CardsLine title={titleData}>Residents: {MoreInfoComponents}</CardsLine>
+        <CardsLine
+          title={userRole === "Rick" ? titleData.slice(0, -2) : undefined}
+          onClick={onClickSeeMore}
+        >
+          Residents: {seeMore ? MoreInfoComponents : "Click to see More"}
+        </CardsLine>
       )}
       <CardsLine>
         Dimension:{" "}

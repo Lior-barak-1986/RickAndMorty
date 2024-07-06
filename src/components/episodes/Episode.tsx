@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, MouseEvent } from "react";
 import { EpisodeType } from "../../types/Episodes";
 import { EpisodeContainer, EpisodeHeader } from "./styles";
 import { UserRoles } from "../../types/User";
@@ -16,6 +16,7 @@ function Episode({ data, userRole }: EpisodeProps) {
   const { name, created, episode, air_date, characters, id } = data;
   const [isFlipped, setIsFlipped] = useState(false);
   const [titleData, setTitleData] = useState("");
+  const [seeMore, setSeeMore] = useState(false);
 
   const onClick = () => {
     setIsFlipped((val) => !val);
@@ -39,6 +40,11 @@ function Episode({ data, userRole }: EpisodeProps) {
     [episode, userRole, id]
   );
 
+  const onClickSeeMore = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setSeeMore((val) => !val);
+  };
+
   const createDate = new Date(created);
 
   const airDate = new Date(air_date);
@@ -57,9 +63,10 @@ function Episode({ data, userRole }: EpisodeProps) {
         </CardsLimit>
       </CardsLine>
       <CardsLine
-        title={userRole === "Rick" ? titleData.slice(0, -1) : undefined}
+        title={userRole === "Rick" ? titleData.slice(0, -2) : undefined}
+        onClick={onClickSeeMore}
       >
-        Characters: {MoreInfoComponents}
+        Characters: {seeMore ? MoreInfoComponents : "Click to see More"}
       </CardsLine>
       <CardsLine>
         Created at:
