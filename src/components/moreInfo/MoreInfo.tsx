@@ -21,11 +21,11 @@ const MoreInfo = ({
   openLoginMenu,
   isLast = false,
 }: MoreInfoProps) => {
-  const { data: episode } = useFetchByType(id, type);
-  setTitleData(episode);
+  const { data } = useFetchByType(id, type);
+  setTitleData(data);
   return (
     <CardsLimit shouldBlur={userRole !== typeAdmin} onClick={openLoginMenu}>
-      {episode} {isLast ? "" : ","}
+      {data} {isLast ? "" : ","}
     </CardsLimit>
   );
 };

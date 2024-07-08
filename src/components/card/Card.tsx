@@ -30,7 +30,7 @@ const Card = ({ data, userRole, openLogin }: CardProps) => {
           userRole={userRole}
         />
       )}
-      {(data as LocationType).dimension && (
+      {(data as LocationType).residents && (
         <Location
           data={data as LocationType}
           openLogin={openLogin}
