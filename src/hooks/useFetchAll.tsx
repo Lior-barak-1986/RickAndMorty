@@ -1,9 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-  fetchAllCharacters,
-  fetchAllEpisodes,
-  fetchAllLocations,
-} from "../services/FetchData";
+import { fetchAllByType } from "../services/FetchData";
+import { allTypesArray } from "../types/Api";
 
 const useFetchAll = (val: string) => {
   const { data, status, isError, isLoading } = useQuery({
@@ -11,11 +8,9 @@ const useFetchAll = (val: string) => {
     queryFn: async () => {
       if (!val) return [];
       try {
-        const responses = await Promise.all([
-          fetchAllCharacters(`name=${val}`),
-          fetchAllLocations(`name=${val}`),
-          fetchAllEpisodes(`name=${val}`),
-        ]);
+        const responses = await Promise.all(
+          allTypesArray.map((type) => fetchAllByType(type, `name=${val}`))
+        );
         return responses.reduce(
           // @ts-ignore
           (curr, acc) => curr.concat(...acc.map((val) => val.results)),

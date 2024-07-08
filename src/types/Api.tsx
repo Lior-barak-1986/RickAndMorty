@@ -26,4 +26,10 @@ export const typeCharacter: APITypeCharacter = "Character";
 export const typeEpisode: APITypeEpisode = "Episode";
 export const typeLocation: APITypeLocation = "Location";
 
+export const allTypesArray: APIType[] = [
+  typeCharacter,
+  typeEpisode,
+  typeLocation,
+];
+
 export type APIType = APITypeCharacter | APITypeEpisode | APITypeLocation;

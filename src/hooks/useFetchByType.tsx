@@ -1,9 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-  fetchCharacters,
-  fetchEpisodes,
-  fetchLocations,
-} from "../services/FetchData";
+import { fetchByType } from "../services/FetchData";
 import {
   APIType,
   typeCharacter,
@@ -37,11 +33,9 @@ const useFetchByType = (val: string, type: APIType) => {
 const getFetch = (type: APIType, val: string) => {
   switch (type) {
     case typeCharacter:
-      return fetchCharacters(val);
     case typeLocation:
-      return fetchLocations(val);
     case typeEpisode:
-      return fetchEpisodes(val);
+      return fetchByType(type, val);
     default:
       throw new Error("Type not found");
   }
