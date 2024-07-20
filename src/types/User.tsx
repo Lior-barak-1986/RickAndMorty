@@ -1,6 +1,7 @@
 export type UserRoles = "Rick" | "Morty" | "Visitor";
 
 export const typeAdmin: UserRoles = "Rick";
+export const typeVisitor: UserRoles = "Visitor";
 
 export interface UserType {
   username: string;

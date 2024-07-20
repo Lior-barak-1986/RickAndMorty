@@ -17,24 +17,17 @@ import {
 } from "./styles";
 import { faUser, faLock, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { UserPartial } from "../../types/User";
+import useLogin from "../../hooks/useLogin";
 
-interface LoginProps {
-  username: string;
-  onLogin: (userData: UserPartial) => Promise<unknown>;
-  onLogout: () => Promise<unknown>;
-  isOpen: boolean;
-  openLogin: () => void;
-  closeLogin: () => void;
-}
-
-function Login({
-  username,
-  onLogin,
-  onLogout,
-  isOpen,
-  openLogin,
-  closeLogin,
-}: LoginProps) {
+function Login() {
+  const {
+    userObj: { username },
+    onLogin,
+    onLogout,
+    isLoginOpen,
+    openLogin,
+    closeLogin,
+  } = useLogin();
   const [userData, setUserData] = useState<UserPartial>({
     username,
     password: "",
@@ -79,7 +72,7 @@ function Login({
 
   return (
     <LoginContainer>
-      <LoginModalContainer isOpen={isOpen} onRequestClose={onClick}>
+      <LoginModalContainer isOpen={isLoginOpen} onRequestClose={onClick}>
         <LoginForm onSubmit={onClickLogin}>
           <LoginInputContainer isError={error.length > 0}>
             <LoginFA icon={faUser} />
@@ -110,7 +103,7 @@ function Login({
           <LoginError>{error}</LoginError>
         </LoginForm>
       </LoginModalContainer>
-      {!isOpen && (
+      {!isLoginOpen && (
         <LoginCloseContainer onClick={openLogin}>
           <LoginUser icon={faUser} />
           <LoginDiv>

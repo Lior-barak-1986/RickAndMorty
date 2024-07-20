@@ -1,20 +1,21 @@
 import { useState } from "react";
-import { UserPartial, UserRoles } from "../types/User";
+import { typeVisitor, UserPartial, UserRoles } from "../types/User";
 import { login } from "../services/FetchData";
-import { addData, clearData } from "../services/Storage";
+import { addData, clearData, getData } from "../services/Storage";
+import { defaultUser } from "../util";
 
 const useLogin = () => {
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState<UserRoles>("Visitor");
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [userObj, setUserObj] = useState<{ username: string; role: UserRoles }>(
+    JSON.parse(getData("user") || JSON.stringify(defaultUser))
+  );
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const onLogin = async (userData: UserPartial) => {
     return new Promise((res, rej) => {
       setTimeout(() => {
         try {
           const user = login(userData);
-          setRole(user.role);
+          setUserObj(user);
           addData("user", JSON.stringify(user));
-          setUsername(userData.username);
           res(user);
         } catch (e: any) {
           rej(new Error(e));
@@ -27,8 +28,7 @@ const useLogin = () => {
       setTimeout(() => {
         try {
           clearData();
-          setUsername("");
-          setRole("Visitor");
+          setUserObj(defaultUser);
           res("");
         } catch (e: any) {
           rej(new Error(e));
@@ -37,30 +37,25 @@ const useLogin = () => {
     });
   };
 
-  // const changeIsOpen = (val = !isOpenLogin) => {
-  //   setIsOpenLogin(val);
-  // };
-
   const openLogin = () => {
-    if (role === "Visitor") {
-      setIsOpenLogin(true);
+    if (userObj.role === typeVisitor) {
+      setIsLoginOpen(true);
     } else {
       alert("Log in as Admin Morty!");
     }
   };
 
-  const openCloseLogin = () => {
-    setIsOpenLogin(false);
+  const closeLogin = () => {
+    setIsLoginOpen(false);
   };
 
   return {
     onLogin,
     openLogin,
-    openCloseLogin,
+    closeLogin,
     onLogout,
-    isOpenLogin,
-    username,
-    role,
+    isLoginOpen,
+    userObj,
   };
 };
 

@@ -5,36 +5,38 @@ import { LocationType } from "../../types/Locations";
 import Character from "../character/Character";
 import Episode from "../episodes/Episode";
 import Location from "../locations/Location";
-import { UserRoles } from "../../types/User";
+import useLogin from "../../hooks/useLogin";
 
 interface CardProps {
   data: EpisodeType | CharacterType | LocationType;
-  userRole: UserRoles;
   openLogin: (e: MouseEvent<unknown>) => void;
 }
 
-const Card = ({ data, userRole, openLogin }: CardProps) => {
+const Card = ({ data, openLogin }: CardProps) => {
+  const {
+    userObj: { role },
+  } = useLogin();
   return (
     <>
       {(data as CharacterType).image && (
         <Character
           data={data as CharacterType}
           openLogin={openLogin}
-          userRole={userRole}
+          userRole={role}
         />
       )}
       {(data as EpisodeType).air_date && (
         <Episode
           data={data as EpisodeType}
           openLogin={openLogin}
-          userRole={userRole}
+          userRole={role}
         />
       )}
       {(data as LocationType).residents && (
         <Location
           data={data as LocationType}
           openLogin={openLogin}
-          userRole={userRole}
+          userRole={role}
         />
       )}
     </>

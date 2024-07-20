@@ -1,3 +1,5 @@
+import { UserRoles } from "./types/User";
+
 export const baseURL = "https://rickandmortyapi.com/api";
 
 export const fetchData = async (val: string) => {
@@ -24,4 +26,9 @@ export const addData = (
   if (val) {
     setData((curr) => (curr.includes(val) ? curr + val + " ," : curr));
   }
+};
+
+export const defaultUser: { username: string; role: UserRoles } = {
+  username: "",
+  role: "Visitor",
 };
