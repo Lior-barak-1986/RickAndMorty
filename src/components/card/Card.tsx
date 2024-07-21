@@ -6,6 +6,14 @@ import Character from "../character/Character";
 import Episode from "../episodes/Episode";
 import Location from "../locations/Location";
 import useLogin from "../../hooks/useLogin";
+import { UserRoles } from "../../types/User";
+import {
+  APIType,
+  typeCharacter,
+  typeEpisode,
+  typeLocation,
+} from "../../types/Api";
+import { instanceOf } from "../../util";
 
 interface CardProps {
   data: EpisodeType | CharacterType | LocationType;
@@ -16,31 +24,62 @@ const Card = ({ data, openLogin }: CardProps) => {
   const {
     userObj: { role },
   } = useLogin();
-  return (
-    <>
-      {(data as CharacterType).image && (
+  try {
+    const type = instanceOf(data);
+    return (
+      <CardFactoryComponent
+        data={data as LocationType}
+        openLogin={openLogin}
+        userRole={role}
+        type={type}
+      />
+    );
+  } catch (e) {
+    return null;
+  }
+};
+
+interface CardFactoryComponentInterface {
+  data: LocationType;
+  userRole: UserRoles;
+  openLogin: (e: MouseEvent<unknown>) => void;
+  type: APIType;
+}
+
+const CardFactoryComponent = ({
+  data,
+  openLogin,
+  userRole,
+  type,
+}: CardFactoryComponentInterface) => {
+  switch (type) {
+    case typeCharacter:
+      return (
         <Character
-          data={data as CharacterType}
+          data={data as unknown as CharacterType}
           openLogin={openLogin}
-          userRole={role}
+          userRole={userRole}
         />
-      )}
-      {(data as EpisodeType).air_date && (
+      );
+    case typeEpisode:
+      return (
         <Episode
-          data={data as EpisodeType}
+          data={data as unknown as EpisodeType}
           openLogin={openLogin}
-          userRole={role}
+          userRole={userRole}
         />
-      )}
-      {(data as LocationType).residents && (
+      );
+    case typeLocation:
+      return (
         <Location
           data={data as LocationType}
           openLogin={openLogin}
-          userRole={role}
+          userRole={userRole}
         />
-      )}
-    </>
-  );
+      );
+    default:
+      return null;
+  }
 };
 
 export default Card;

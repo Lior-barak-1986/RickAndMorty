@@ -9,8 +9,9 @@ const useLogin = () => {
     JSON.parse(getData("user") || JSON.stringify(defaultUser))
   );
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const onLogin = async (userData: UserPartial) => {
-    return new Promise((res, rej) => {
+
+  const onLogin = async (userData: UserPartial) =>
+    new Promise((res, rej) => {
       setTimeout(() => {
         try {
           const user = login(userData);
@@ -22,9 +23,9 @@ const useLogin = () => {
         }
       }, 100);
     });
-  };
-  const onLogout = async () => {
-    return new Promise((res, rej) => {
+
+  const onLogout = async () =>
+    new Promise((res, rej) => {
       setTimeout(() => {
         try {
           clearData();
@@ -35,7 +36,6 @@ const useLogin = () => {
         }
       }, 100);
     });
-  };
 
   const openLogin = () => {
     if (userObj.role === typeVisitor) {
@@ -45,9 +45,7 @@ const useLogin = () => {
     }
   };
 
-  const closeLogin = () => {
-    setIsLoginOpen(false);
-  };
+  const closeLogin = () => setIsLoginOpen(false);
 
   return {
     onLogin,
