@@ -28,7 +28,7 @@ const Card = ({ data, openLogin }: CardProps) => {
     const type = instanceOf(data);
     return (
       <CardFactoryComponent
-        data={data as LocationType}
+        data={data}
         openLogin={openLogin}
         userRole={role}
         type={type}
@@ -40,7 +40,7 @@ const Card = ({ data, openLogin }: CardProps) => {
 };
 
 interface CardFactoryComponentInterface {
-  data: LocationType;
+  data: EpisodeType | CharacterType | LocationType;
   userRole: UserRoles;
   openLogin: (e: MouseEvent<unknown>) => void;
   type: APIType;
@@ -56,7 +56,7 @@ const CardFactoryComponent = ({
     case typeCharacter:
       return (
         <Character
-          data={data as unknown as CharacterType}
+          data={data as CharacterType}
           openLogin={openLogin}
           userRole={userRole}
         />
@@ -64,7 +64,7 @@ const CardFactoryComponent = ({
     case typeEpisode:
       return (
         <Episode
-          data={data as unknown as EpisodeType}
+          data={data as EpisodeType}
           openLogin={openLogin}
           userRole={userRole}
         />
